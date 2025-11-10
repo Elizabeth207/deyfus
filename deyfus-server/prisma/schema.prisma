@@ -1,0 +1,239 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+// Enums para mejorar la consistencia de datos
+enum UserRole {
+  ADMIN
+  MANAGER
+  SELLER
+}
+
+enum PaymentMethod {
+  CASH
+  CARD
+  TRANSFER
+}
+
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  FAILED
+}
+
+enum SaleStatus {
+  COMPLETED
+  CANCELLED
+  PENDING
+}
+
+// Tipos más estrictos para movimientos, alertas y finanzas
+enum MovementType {
+  ENTRY
+  EXIT
+  ADJUSTMENT
+}
+
+enum StockAlertType {
+  LOW_STOCK
+  OVERSTOCK
+}
+
+enum StockAlertStatus {
+  PENDING
+  RESOLVED
+}
+
+enum FinancialType {
+  INCOME
+  EXPENSE
+}
+
+model User {
+  id                    Int                     @id @default(autoincrement())
+  name                  String
+  email                 String                  @unique
+  password              String
+  role                  UserRole                @default(SELLER)
+  isActive              Boolean                 @default(true)
+  lastLogin             DateTime?
+  branchId              Int
+  createdAt             DateTime                @default(now())
+  updatedAt             DateTime                @updatedAt
+
+  branch                Branch                  @relation(fields: [branchId], references: [id])
+  sales                 Sale[]
+  financialTransactions FinancialTransaction[]
+  inventoryMovements    InventoryMovement[]
+  stockAlerts           StockAlert[]
+}
+
+model Branch {
+  id                    Int                     @id @default(autoincrement())
+  name                  String
+  address               String
+  phone                 String?
+  isActive              Boolean                 @default(true)
+  createdAt             DateTime                @default(now())
+  updatedAt             DateTime                @updatedAt
+
+  users                 User[]
+  products              Product[]
+  sales                 Sale[]
+  inventory             Inventory[]
+  financialTransactions FinancialTransaction[]
+  inventoryMovements    InventoryMovement[]
+  stockAlerts           StockAlert[]
+}
+
+model Category {
+  id          Int       @id @default(autoincrement())
+  name        String    @unique
+  description String?
+  isActive    Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  products    Product[]
+}
+
+model Product {
+  id          Int       @id @default(autoincrement())
+  name        String
+  description String?
+  sku         String    @unique
+  barcode     String?   @unique
+  price       Decimal   @db.Decimal(10,2)
+  cost        Decimal   @db.Decimal(10,2)
+  brand       String?
+  imageUrl    String?
+  qrCode      String    @unique
+  categoryId  Int?
+  branchId    Int?      // Optional: product can be global or tied to a branch
+  isActive    Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  category            Category?           @relation(fields: [categoryId], references: [id])
+  branch              Branch?             @relation(fields: [branchId], references: [id])
+  inventory           Inventory[]
+  saleItems           SaleItem[]
+  inventoryMovements  InventoryMovement[]
+  stockAlerts         StockAlert[]
+}
+
+model Sale {
+  id              Int           @id @default(autoincrement())
+  userId          Int
+  branchId        Int
+  total           Decimal       @db.Decimal(10,2)
+  subtotal        Decimal       @db.Decimal(10,2)
+  tax             Decimal       @db.Decimal(10,2)
+  discount        Decimal       @db.Decimal(10,2) @default(0)
+  paymentMethod   PaymentMethod @default(CASH)
+  paymentStatus   PaymentStatus @default(PENDING)
+  status          SaleStatus    @default(PENDING)
+  invoiceNumber   String?       @unique
+  notes           String?
+  cancelReason    String?
+  cancelledAt     DateTime?
+  createdAt       DateTime      @default(now())
+
+  user            User          @relation(fields: [userId], references: [id])
+  branch          Branch        @relation(fields: [branchId], references: [id])
+  items           SaleItem[]
+  transactions    FinancialTransaction[] @relation("SaleTransactions")
+
+  @@index([branchId, createdAt])
+}
+
+model SaleItem {
+  id          Int      @id @default(autoincrement())
+  saleId      Int
+  productId   Int
+  quantity    Int
+  price       Decimal  @db.Decimal(10,2)
+  cost        Decimal  @db.Decimal(10,2)
+  discount    Decimal  @db.Decimal(10,2) @default(0)
+  size        String?
+  createdAt   DateTime @default(now())
+
+  sale        Sale     @relation(fields: [saleId], references: [id])
+  product     Product  @relation(fields: [productId], references: [id])
+}
+
+model Inventory {
+  id          Int      @id @default(autoincrement())
+  productId   Int
+  branchId    Int
+  quantity    Int      @default(0)
+  size        String?
+  minStock    Int      @default(5)
+  maxStock    Int?
+  location    String?  // Ubicación en almacén
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  product     Product  @relation(fields: [productId], references: [id])
+  branch      Branch   @relation(fields: [branchId], references: [id])
+
+  @@unique([productId, branchId])
+}
+
+model InventoryMovement {
+  id              Int          @id @default(autoincrement())
+  productId       Int
+  branchId        Int
+  userId          Int
+  type            MovementType
+  quantity        Int
+  previousStock   Int
+  newStock        Int
+  reason          String
+  reference       String?      // Número de documento relacionado
+  createdAt       DateTime     @default(now())
+
+  product         Product      @relation(fields: [productId], references: [id])
+  branch          Branch       @relation(fields: [branchId], references: [id])
+  user            User         @relation(fields: [userId], references: [id])
+}
+
+model StockAlert {
+  id          Int             @id @default(autoincrement())
+  productId   Int
+  branchId    Int
+  userId      Int
+  type        StockAlertType
+  message     String
+  status      StockAlertStatus @default(PENDING)
+  createdAt   DateTime         @default(now())
+  resolvedAt  DateTime?
+
+  product     Product          @relation(fields: [productId], references: [id])
+  branch      Branch           @relation(fields: [branchId], references: [id])
+  user        User             @relation(fields: [userId], references: [id])
+}
+
+model FinancialTransaction {
+  id          Int           @id @default(autoincrement())
+  type        FinancialType
+  amount      Decimal       @db.Decimal(10,2)
+  description String
+  branchId    Int
+  userId      Int
+  category    String        // SALE, PURCHASE, SALARY, etc.
+  reference   String?       // Referencia a documento relacionado
+  saleId      Int?          // optional link to a Sale
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  branch      Branch        @relation(fields: [branchId], references: [id])
+  user        User          @relation(fields: [userId], references: [id])
+  sale        Sale?         @relation("SaleTransactions", fields: [saleId], references: [id])
+
+  @@index([branchId, createdAt])
+}

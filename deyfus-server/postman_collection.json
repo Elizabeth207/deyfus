@@ -1,0 +1,54 @@
+{
+  "info": {
+    "name": "Deyfus API - Minimal",
+    "_postman_id": "deyfus-minimal-collection",
+    "description": "Colección mínima para arrancar: login y crear venta (plantillas). Reemplazar variables de entorno en Postman.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth - Login",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"admin@example.com\",\n  \"password\": \"password\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/login",
+          "host": ["{{baseUrl}}"],
+          "path": ["api","auth","login"]
+        }
+      }
+    },
+    {
+      "name": "Sales - Create Sale",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{jwt}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"branchId\": \"<branchId>\",\n  \"customerName\": \"Cliente Test\",\n  \"items\": [ { \"productId\": \"<productId>\", \"size\": \"M\", \"quantity\": 1, \"unitPrice\": 2500 } ],\n  \"paymentMethod\": \"CASH\",\n  \"paidAmount\": 2500\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/sales",
+          "host": ["{{baseUrl}}"],
+          "path": ["api","sales"]
+        }
+      }
+    }
+  ],
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:4000" },
+    { "key": "jwt", "value": "" }
+  ]
+}

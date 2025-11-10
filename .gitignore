@@ -1,0 +1,34 @@
+# Node modules
+node_modules/
+**/node_modules/
+
+# Environment files
+.env
+.env.*
+
+# Logs
+npm-debug.log*
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+
+# Build artifacts
+dist/
+build/
+/.turbo/
+
+# Prisma local DB
+prisma/dev.db
+
+# Ignore local editor swap/temp files
+*~
+
+# Keep uploads and data export (we want to include user data)
+!deyfus-server/uploads/
+!deyfus-server/data_export.json

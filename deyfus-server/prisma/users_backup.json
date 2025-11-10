@@ -1,0 +1,62 @@
+[
+  {
+    "id": 4,
+    "name": "david",
+    "email": "david@gmail.com",
+    "password": "$2b$10$kZY1yvA.wU33kCG9mIyWT.KKk3j5PfrWeMg.ViwpqnWCq11snVZ8S",
+    "role": "SELLER",
+    "isActive": true,
+    "lastLogin": null,
+    "branchId": 1,
+    "createdAt": "2025-10-29T06:51:27.764Z",
+    "updatedAt": "2025-10-29T06:51:27.764Z"
+  },
+  {
+    "id": 2,
+    "name": "Lisa",
+    "email": "huarcayacontreraselizabeth@gmail.com",
+    "password": "$2b$10$w3GIN4iHpUL6/fb75lqPbu57xyj1qYQMSBeLMMKXNm3.5Jx4j2WTy",
+    "role": "SELLER",
+    "isActive": false,
+    "lastLogin": null,
+    "branchId": 1,
+    "createdAt": "2025-10-29T03:10:17.451Z",
+    "updatedAt": "2025-10-30T04:57:13.188Z"
+  },
+  {
+    "id": 1,
+    "name": "Admin",
+    "email": "admin@deyfus.com",
+    "password": "$2b$10$JKgIEpuE0seYPROpNgj6ZuzqsfRq8MnZqJW97AYQMJPorMZDmoNSu",
+    "role": "ADMIN",
+    "isActive": true,
+    "lastLogin": "2025-10-31T02:46:50.926Z",
+    "branchId": 1,
+    "createdAt": "2025-10-29T03:07:12.154Z",
+    "updatedAt": "2025-10-31T02:46:50.944Z"
+  },
+  {
+    "id": 5,
+    "name": "Elizabeth",
+    "email": "Elizabeth@gmail.com",
+    "password": "$2b$10$8HcugX2EbXvSss1UoBK/gerb8BaAoRtjffampqL6459vonJjtCY02",
+    "role": "ADMIN",
+    "isActive": true,
+    "lastLogin": null,
+    "branchId": 1,
+    "createdAt": "2025-11-01T03:43:10.087Z",
+    "updatedAt": "2025-11-01T03:43:10.087Z"
+  },
+  {
+    "id": 6,
+    "name": "Lisa",
+    "email": "lisa@gmail.com",
+    "password": "$2b$10$UOihXLWwMl4mFnwbATHAP.AnSsGi9Zcz2eSEI6lB2whZlVjd9iTSy",
+    "role": "ADMIN",
+    "isActive": true,
+    "lastLogin": "2025-11-07T06:48:28.810Z",
+    "branchId": 1,
+    "createdAt": "2025-11-01T04:00:52.636Z",
+    "updatedAt": "2025-11-07T06:48:28.820Z"
+  }
+]
