@@ -1,15 +1,15 @@
-# 🏪 Deyfus — Sistema de Gestión de Inventario y Ventas
+#  Deyfus — Sistema de Gestión de Inventario y Ventas
 
 Una aplicación full-stack para gestionar sucursales, inventario, productos, ventas y finanzas. Incluye autenticación JWT, panel de control, reportes y gestión de stock.
 
-## 📋 Requisitos Previos
+##  Requisitos Previos
 
 - **Node.js** v18+ ([Descargar](https://nodejs.org/))
 - **PostgreSQL** 13+ ([Descargar](https://www.postgresql.org/)) o usar otra BD compatible con Prisma
 - **Git** ([Descargar](https://git-scm.com/))
 - **npm** (incluido en Node.js)
 
-## 🚀 Instalación Rápida
+##  Instalación Rápida
 
 ### 1. Clonar el repositorio
 
@@ -84,7 +84,7 @@ npm run dev
 
 La aplicación se abrirá en `http://localhost:5173`
 
-## 🔑 Credenciales de Prueba
+##  Credenciales de Prueba
 
 Después de importar datos, puedes usar las credenciales que registraste:
 
@@ -93,7 +93,7 @@ Después de importar datos, puedes usar las credenciales que registraste:
 
 O crea un nuevo usuario usando el formulario de registro.
 
-## 📁 Estructura del Proyecto
+## Estructura del Proyecto
 
 ```
 deyfus/
@@ -122,45 +122,45 @@ deyfus/
 └── .gitignore             # Excluye node_modules, .env, etc. (pero incluye data_export.json y uploads/)
 ```
 
-## 🎯 Características Principales
+##  Características Principales
 
-### ✅ Autenticación
+### Autenticación
 - Login / Registro con JWT
 - Recuperación de contraseña
 - Rol de usuario (ADMIN, MANAGER, SELLER)
 
-### 📊 Dashboard
+###  Dashboard
 - Resumen de ventas, inventario y finanzas
 - Gráficos y análisis
 
-### 🛍️ Gestión de Productos
+###  Gestión de Productos
 - CRUD de productos
 - Código de barras y QR
 - Gestión de categorías
 - Subida de imágenes
 
-### 📦 Inventario
+###  Inventario
 - Seguimiento de stock por sucursal
 - Movimientos de inventario
 - Alertas de bajo stock / overstock
 - Ajustes manuales
 
-### 💳 Ventas
+###  Ventas
 - Punto de venta (POS)
 - Historial de ventas
 - Métodos de pago (efectivo, tarjeta, transferencia)
 
-### 💰 Finanzas
+###  Finanzas
 - Registro de ingresos/gastos
 - Reportes financieros por sucursal
 - Seguimiento de transacciones
 
-### 🏢 Sucursales
+###  Sucursales
 - Gestión multi-sucursal
 - Estadísticas por sucursal
 - Control de inventario distribuido
 
-## 🛠️ Scripts Disponibles
+##  Scripts Disponibles
 
 ### Backend (`deyfus-server/`)
 
@@ -183,7 +183,7 @@ npm run preview          # Preview de la build
 npm run lint             # ESLint
 ```
 
-## 🔄 Restaurar Datos en Otra Máquina
+##  Restaurar Datos en Otra Máquina
 
 Si clonaste el repo en otra PC:
 
@@ -199,25 +199,25 @@ npx prisma db push
 # Importar tus datos guardados
 node scripts/import_data.cjs
 
-# ✅ Listo — todos tus datos estarán disponibles
+#  Listo — todos tus datos estarán disponibles
 ```
 
-## 📸 Imágenes y Uploads
+##  Imágenes y Uploads
 
 Las imágenes que subiste están en `deyfus-server/uploads/` y se incluyen en el repositorio. Se sirven automáticamente cuando accedes a los productos.
 
 Si necesitas agregar más imágenes después de la importación, usa la interfaz de carga en la app.
 
-## 🔐 Seguridad
+##  Seguridad
 
-⚠️ **Recomendaciones:**
+ **Recomendaciones:**
 
 - `.env` contiene credenciales sensibles — **NO subir a GitHub** (ya está en `.gitignore`)
 - JWT_SECRET — usa una clave fuerte y única
 - Para producción, usa variables de entorno seguras (env. vault, servicios administrados)
 - Considera usar HttpOnly cookies en lugar de localStorage para tokens (mejora seguridad)
 
-## 🐛 Troubleshooting
+##  Troubleshooting
 
 ### Error: `P1000: Authentication failed`
 - Verifica que PostgreSQL está corriendo
@@ -239,11 +239,11 @@ Si necesitas agregar más imágenes después de la importación, usa la interfaz
 - Revisa que `data_export.json` existe en `deyfus-server/`
 - Ejecuta `node scripts/import_data.cjs` de nuevo
 
-## 📧 Contacto & Soporte
+##  Contacto & Soporte
 
 Para issues o preguntas, abre un [issue en GitHub](https://github.com/Elizabeth207/deyfus/issues).
 
-## 📄 Licencia
+##  Licencia
 
 MIT — libre para usar, modificar y distribuir.
 
